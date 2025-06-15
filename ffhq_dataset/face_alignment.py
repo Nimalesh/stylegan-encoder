@@ -73,8 +73,9 @@ def image_align(src_file, dst_file, face_landmarks, output_size=1024, transform_
             blur = qsize * 0.02
             img += (scipy.ndimage.gaussian_filter(img, [blur, blur, 0]) - img) * np.clip(mask * 3.0 + 1.0, 0.0, 1.0)
             img += (np.median(img, axis=(0,1)) - img) * np.clip(mask, 0.0, 1.0)
-            img = PIL.Image.fromarray(np.uint8(np.clip(np.rImage.Resampling.LANCZOSint(img), 0, 255)), 'RGB')
+            img = img.resize((1024, 1024), resample=Image.Resampling.LANCZOS)
             quad += pad[:2]
+
 
         # Transform.
         img = img.transform((transform_size, transform_size), PIL.Image.QUAD, (quad + 0.5).flatten(), PIL.Image.BILINEAR)
